@@ -86,7 +86,8 @@ $lineHeight: 50px;
         display: flex;
         position: relative;
         transition: all 0.3s;
-        padding-top: 10px;
+        padding: 5px 0;
+        border-bottom: 1px solid #ddd;
       }
       &_content {
         width: 100%;
@@ -131,7 +132,7 @@ $lineHeight: 50px;
             border-radius: 50%;
             border: 2px solid var(--priamry);
           }
-          &:checked {
+          &.checked {
             &::before {
               background: var(--priamry);
               content: '';

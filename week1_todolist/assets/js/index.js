@@ -18,7 +18,7 @@ import { getDayFormate } from './api.js'
       str += `
       <li class="todo_item">
         <button class="btn todo_edit"><i class="fas fa-pencil-alt"></i></button>
-        <p class="todo_content"><input type="checkbox" name="complate"><span>${item.todo}</span><span>${item.createDay}</span></p>
+        <p class="todo_content"><input type="checkbox" name="complate" class="${item.complate ? 'checked' : ''}"><span>${item.todo}</span><span>${item.createDay}</span></p>
         <button class="btn todo_remove"><i class="fas fa-trash-alt"></i></button>
       </li>
       `
