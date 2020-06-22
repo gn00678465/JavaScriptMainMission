@@ -80,27 +80,28 @@ $lineHeight: 50px;
       cursor: pointer;
       border-radius: 3px;
       margin-right: 10px;
-    }
-    .btn_group {
-      margin-left: auto;
+      width: $lineHeight;
+      height: $lineHeight;
     }
     .todo {
       &_item {
         width: 100%;
-        line-height: $lineHeight;
         display: flex;
-        transition: all 0.3s;
+        line-height: $lineHeight;
+        align-items: center;
         padding: 5px 0;
         border-bottom: 1px solid #ddd;
-      }
-      &_content {
-        transition: width 0.3s;
-        display: flex;
-        align-items: center;
-        padding: 0 40px;
-        input[type='checkbox'] {
+        button:nth-of-type(1) {
+          background: var(--edit);
+          margin-left: auto;
+        }
+        button:nth-of-type(2) {
+          background: var(--remove);
+        }
+        input[type="checkbox"] {
           position: relative;
           border: none;
+          margin-left: 20px;
           &::before {
             content: '';
             position: absolute;
@@ -133,25 +134,10 @@ $lineHeight: 50px;
             }
           }
         }
-        label {
-          margin-left: 25px;
-          font-size: 24px;
-        }
-        span:nth-of-type(1) {
-          margin-left: 30px;
-          user-select: none;
-          font-size: 18px;
-        }
       }
-      &_edit {
-        width: $lineHeight;
-        height: $lineHeight;
-        background: var(--edit);
-      }
-      &_remove {
-        width: $lineHeight;
-        height: $lineHeight;
-        background: var(--remove);
+      &_text {
+        margin-left: 20px;
+        font-size: 24px;
       }
     }
   }
