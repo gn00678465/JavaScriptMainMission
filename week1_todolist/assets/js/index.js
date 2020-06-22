@@ -28,14 +28,11 @@ import { getDayFormate } from './api.js'
     data.forEach(item => {
       str += `
       <li class="todo_item" data-timetamp="${item.timetamp}">
-        <p class="todo_content"><input type="checkbox" name="complate" id="todoItem" class="${item.complate ? 'checked' : ''}">
-          <span>${item.createDay}</span>
-          <label for="todoItem">${item.todo}</label>
-        </p>
-        <div class='btn_group'>
-          <button class="btn todo_edit"><i class="fas fa-pencil-alt"></i></button>
-          <button class="btn todo_remove"><i class="fas fa-trash-alt"></i></button>
-        </div>
+        <input type="checkbox" name="complate" class="${item.complate ? 'checked' : ''}">
+        <span class="todo_text">${item.createDay}</span>
+        <label class="todo_text">${item.todo}</label>
+        <button class="btn todo_edit" data-btn="edit"><i class="fas fa-pencil-alt"></i></button>
+        <button class="btn todo_remove" data-btn="remove"><i class="fas fa-trash-alt"></i></button>
       </li>
       `
     })
@@ -71,6 +68,14 @@ import { getDayFormate } from './api.js'
 
 
   const operaterTodos = function (e) {
+    let currentIndex
+    const action = e.target.dataset.btn
+    this.querySelectorAll('.todo_item').forEach( el => {
+      if (el === e.target.parentNode && e.target.parentNode.classList.contains('todo_item')) {
+        currentIndex = data.findIndex( item => item.timetamp === parseInt(el.dataset.timetamp))
+      }
+    })
+    console.log(currentIndex, action)
   }
 
   // EventListener
