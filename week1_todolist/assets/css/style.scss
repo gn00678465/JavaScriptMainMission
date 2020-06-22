@@ -1,3 +1,6 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet');
+
 * {
   margin: 0;
   padding: 0;
@@ -10,19 +13,23 @@ body,html {
   align-items: center;
   justify-content: center;
   background: #ddd;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+ul,li {
+  list-style: none;
 }
 :root {
   --priamry: #3498db;
   --white: #fff;
+  --edit: #f39c12;
+  --remove: #e74c3c;
 }
 
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css');
-
 $radius: 10px;
+$lineHeight: 50px;
 
 .todolist {
   width: 550px;
-  height: 800px;
   display: flex;
   flex-wrap: wrap;
   .header,.content,.handle {
@@ -34,28 +41,167 @@ $radius: 10px;
     background-size: cover;
     border-top-right-radius: $radius;
     border-top-left-radius: $radius;
+    position: relative;
+    .today, .clear {
+      position: absolute;
+      top: 10%;
+      font-size: 35px;
+      color: var(--white);
+    }
+    .today {
+      left: 5%;
+      user-select: none;
+    }
+    .clear {
+      right: 5%;
+      cursor: pointer;
+      &:hover {
+        color: var(--remove);
+      }
+    }
   }
   .content {
     background: var(--white);
-    padding: 20px;
+    height: 500px;
     .list {
       width: 100%;
       height: 100%;
+      overflow: hidden;
+    }
+    .btn {
+      background: none;
+      border: none;
+      outline: none;
+      position: absolute;
+      font-size: 25px;
+      color: var(--white);
+    }
+    .todo {
+      &_item {
+        line-height: $lineHeight;
+        display: flex;
+        position: relative;
+        transition: all 0.3s;
+        padding-top: 10px;
+      }
+      &_content {
+        width: 100%;
+        position: relative;
+        transition: width 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        font-size: 25px;
+        padding: 0 40px;
+        &::before {
+          content: '';
+          position: absolute;
+          height: 100%;
+          width: 6px;
+          left: 0;
+          top: 0;
+          background: var(--edit);
+        }
+        &::after {
+          content: '';
+          position: absolute;
+          height: 100%;
+          width: 6px;
+          right: 0;
+          top: 0;
+          background: var(--remove);
+        }
+        input[type='checkbox'] {
+          position: relative;
+          border: none;
+          &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
+            background: var(--white);
+            border-radius: 50%;
+            border: 2px solid var(--priamry);
+          }
+          &:checked {
+            &::before {
+              background: var(--priamry);
+              content: '';
+            }
+            &::after {
+              content: '';position: absolute;
+              width: 14px;
+              height: 6px;
+              top: 0;
+              left: -20%;
+              border: 4px solid var(--white);
+              border-top: none;
+              border-right: none;
+              transform: rotate(-55deg);
+              z-index: 9;
+            }
+          }
+        }
+      }
+      &_edit {
+        width: $lineHeight;
+        height: $lineHeight;
+        left: - $lineHeight;
+        background: var(--edit);
+      }
+      &_remove {
+        width: $lineHeight;
+        height: $lineHeight;
+        right: - $lineHeight;
+        background: var(--remove);
+      }
+      &_item.edit {
+        padding-right: $lineHeight; 
+        transform: translateX($lineHeight);
+        .todo_content::after {
+          width: 0;;
+        }
+      }
+      &_item.remove {
+        padding-left: $lineHeight; 
+        transform: translateX(-$lineHeight);
+        .todo_content::before {
+          width: 0;;
+        }
+      }
     }
   }
   .handle {
     background: var(--white);
     margin-top: auto;
-    padding: 20px;
+    line-height: 80;
+    padding: 10px 0;
     border-bottom-right-radius: $radius;
     border-bottom-left-radius: $radius;
     display: flex;
     justify-content: center;
     align-items: center;
     border-top: 3px solid #ddd;
+    .addTodo {
+      margin-left: 10px;
+      height: 40px;
+      width: 0;
+      opacity: 0;
+      transition: all 0.3s;
+    }
+    &.add {
+      .addTodo {
+        width: 400px;
+        opacity: 1;
+      }
+    }
   }
-  .addToDo {
-    font-size: 50px;
+  .addBtn {
+    font-size: 40px;
     color: var(--priamry);
   }
 }
