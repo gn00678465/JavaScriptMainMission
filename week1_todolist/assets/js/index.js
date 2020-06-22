@@ -7,8 +7,19 @@ import { getDayFormate } from './api.js'
   const clear = document.querySelector('.clear')
   const today = document.querySelector('.today')
   const todoList = document.querySelector('.list')
-  let addStatus = false
   const data = JSON.parse(window.localStorage.getItem('todo')) || []
+
+  let addStatus = false
+
+  const dataProxy = new Proxy(data, {
+    get(target, key) {
+      return target[key]
+    },
+    set(target, key, val) {
+      target[key] = val
+      return true
+    }
+  })
 
   // reader
   const render = function () {
@@ -16,19 +27,25 @@ import { getDayFormate } from './api.js'
     let str = ''
     data.forEach(item => {
       str += `
-      <li class="todo_item">
-        <button class="btn todo_edit"><i class="fas fa-pencil-alt"></i></button>
-        <p class="todo_content"><input type="checkbox" name="complate" class="${item.complate ? 'checked' : ''}"><span>${item.todo}</span><span>${item.createDay}</span></p>
-        <button class="btn todo_remove"><i class="fas fa-trash-alt"></i></button>
+      <li class="todo_item" data-timetamp="${item.timetamp}">
+        <p class="todo_content"><input type="checkbox" name="complate" id="todoItem" class="${item.complate ? 'checked' : ''}">
+          <span>${item.createDay}</span>
+          <label for="todoItem">${item.todo}</label>
+        </p>
+        <div class='btn_group'>
+          <button class="btn todo_edit"><i class="fas fa-pencil-alt"></i></button>
+          <button class="btn todo_remove"><i class="fas fa-trash-alt"></i></button>
+        </div>
       </li>
       `
     })
     todoList.innerHTML =str
   }
 
+
   // addToDo
   const addTodoHandler = function (e) {
-    if (e.keyCode !== 13 && this.value !=='') return
+    if (e.keyCode !== 13 || this.value.trim() === '') return
     data.push({
       todo: this.value.trim(),
       done: false,
@@ -36,15 +53,25 @@ import { getDayFormate } from './api.js'
       timetamp: Math.floor(Date.now() / 1000)
     })
     this.value= ''
+    // window.localStorage.setItem('todo',JSON.stringify(data))
     render()
   }
 
-  //updateTodo
+   //updateTodo
+  function editTodo () {
+  }
 
   //delTodo
+  function removeTodo (currentIndex) {
+    data.splice(currentIndex,1)
+    render()
+  }
 
   //clearTodo
 
+
+  const operaterTodos = function (e) {
+  }
 
   // EventListener
   addBtn.addEventListener('click', function () {
@@ -61,5 +88,6 @@ import { getDayFormate } from './api.js'
     handle.classList.toggle('add')
   })
   addTodo.addEventListener('keyup', addTodoHandler)
+  todoList.addEventListener('click', operaterTodos)
   render()
 })()
