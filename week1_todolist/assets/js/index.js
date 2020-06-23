@@ -28,71 +28,93 @@ import { getDayFormate } from './api.js'
     data.forEach(item => {
       str += `
       <li class="todo_item" data-timetamp="${item.timetamp}">
-        <input type="checkbox" name="complate" class="${item.complate ? 'checked' : ''}">
+        <input type="checkbox" name="complate" class="${item.done ? 'checked' : ''}" id="todo_${item.timetamp}">
         <span class="todo_text">${item.createDay}</span>
-        <label class="todo_text">${item.todo}</label>
-        <button class="btn todo_edit" data-btn="edit"><i class="fas fa-pencil-alt"></i></button>
-        <button class="btn todo_remove" data-btn="remove"><i class="fas fa-trash-alt"></i></button>
+        <label class="todo_text" for="todo_${item.timetamp}" data-btn="done">${item.todo}</label>
+        <button class="btn todo_edit" data-btn="edit"></button>
+        <button class="btn todo_remove" data-btn="remove"></button>
       </li>
       `
     })
     todoList.innerHTML =str
+    window.localStorage.setItem('todo',JSON.stringify(data))
   }
 
 
   // addToDo
   const addTodoHandler = function (e) {
-    if (e.keyCode !== 13 || this.value.trim() === '') return
-    data.push({
-      todo: this.value.trim(),
-      done: false,
-      createDay: getDayFormate('today'),
-      timetamp: Math.floor(Date.now() / 1000)
-    })
-    this.value= ''
-    // window.localStorage.setItem('todo',JSON.stringify(data))
+    if (e.keyCode === 13 && this.value.trim() !== '') {
+      dataProxy.push({
+        todo: this.value.trim(),
+        done: false,
+        createDay: getDayFormate('today'),
+        timetamp: Math.floor(Date.now() / 1000)
+      })
+      this.value= ''
+    }
     render()
   }
 
+  const operaterTodo = function (action, todo) {
+    if (action === 'remove') removeTodo (todo)
+    // else if (action === 'edit') editTodo (todo)
+    else if (action === 'done') doneTodo (todo)
+  }
+
    //updateTodo
-  function editTodo () {
+  // function editTodo (todo) {
+  //   const index = dataProxy.findIndex( item => item === todo)
+  //   addTodoHandler()
+  // }
+
+  function doneTodo (todo) {
+    const index = dataProxy.findIndex( item => item === todo)
+    dataProxy[index].done = !dataProxy[index].done
+    render()
   }
 
   //delTodo
-  function removeTodo (currentIndex) {
-    data.splice(currentIndex,1)
+  function removeTodo (todo) {
+    const index = dataProxy.findIndex( item => item === todo)
+    dataProxy.splice(index, 1)
     render()
   }
 
   //clearTodo
+  function clearHandler () {
+    dataProxy.length = 0
+    render()
+  }
 
-
-  const operaterTodos = function (e) {
-    let currentIndex
-    const action = e.target.dataset.btn
-    this.querySelectorAll('.todo_item').forEach( el => {
-      if (el === e.target.parentNode && e.target.parentNode.classList.contains('todo_item')) {
-        currentIndex = data.findIndex( item => item.timetamp === parseInt(el.dataset.timetamp))
-      }
-    })
-    console.log(currentIndex, action)
+  const clickHandler = function (e) {
+    let action, thisTodo
+    if (e.target.parentNode.nodeName === 'LI' && e.target.parentNode.classList.contains('todo_item')) {
+      action = e.target.dataset.btn
+      let thisTimetamp = parseInt(e.target.parentNode.dataset.timetamp)
+      thisTodo = dataProxy.filter( item => item.timetamp === thisTimetamp)
+    }
+    operaterTodo(action, thisTodo[0])
   }
 
   // EventListener
+  function showAddBtn () {
+    addBtn.classList.remove('fa-minus-circle')
+    addBtn.classList.add('fa-plus-circle')
+    addBtn.style.color = ''
+  }
+  function closeAddBtn () {
+    addBtn.classList.remove('fa-plus-circle')
+    addBtn.classList.add('fa-minus-circle')
+    addBtn.style.color = '#e74c3c'
+  }
   addBtn.addEventListener('click', function () {
     addStatus = !addStatus
-    if (!addStatus) {
-      addBtn.classList.remove('fa-minus-circle')
-      addBtn.classList.add('fa-plus-circle')
-      addBtn.style.color = ''
-    } else {
-      addBtn.classList.remove('fa-plus-circle')
-      addBtn.classList.add('fa-minus-circle')
-      addBtn.style.color = '#e74c3c'
-    }
+    if (!addStatus) showAddBtn()
+    else closeAddBtn()
     handle.classList.toggle('add')
   })
   addTodo.addEventListener('keyup', addTodoHandler)
-  todoList.addEventListener('click', operaterTodos)
+  todoList.addEventListener('click', clickHandler)
+  clear.addEventListener('click', clearHandler)
   render()
 })()

@@ -88,7 +88,6 @@ ul, li {
 .todolist .content .list {
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -100,64 +99,56 @@ ul, li {
   background: none;
   border: none;
   outline: none;
-  position: absolute;
-  font-size: 25px;
+  font-size: 20px;
   color: var(--white);
+  cursor: pointer;
+  border-radius: 3px;
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
 }
 
 .todolist .content .todo_item {
-  line-height: 50px;
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  position: relative;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+  line-height: 50px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 5px 0;
   border-bottom: 1px solid #ddd;
 }
 
-.todolist .content .todo_content {
-  width: 100%;
-  position: relative;
-  -webkit-transition: width 0.3s;
-  transition: width 0.3s;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  font-size: 25px;
-  padding: 0 40px;
-}
-
-.todolist .content .todo_content::before {
-  content: '';
-  position: absolute;
-  height: 100%;
-  width: 6px;
-  left: 0;
-  top: 0;
+.todolist .content .todo_item .todo_edit {
   background: var(--edit);
+  margin-left: auto;
 }
 
-.todolist .content .todo_content::after {
-  content: '';
-  position: absolute;
-  height: 100%;
-  width: 6px;
-  right: 0;
-  top: 0;
+.todolist .content .todo_item .todo_edit::after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f303";
+}
+
+.todolist .content .todo_item .todo_remove {
   background: var(--remove);
 }
 
-.todolist .content .todo_content input[type='checkbox'] {
-  position: relative;
-  border: none;
+.todolist .content .todo_item .todo_remove::after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f2ed";
 }
 
-.todolist .content .todo_content input[type='checkbox']::before {
+.todolist .content .todo_item input[type="checkbox"] {
+  position: relative;
+  border: none;
+  margin-left: 20px;
+}
+
+.todolist .content .todo_item input[type="checkbox"]::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -172,12 +163,12 @@ ul, li {
   border: 2px solid var(--priamry);
 }
 
-.todolist .content .todo_content input[type='checkbox'].checked::before {
+.todolist .content .todo_item input[type="checkbox"].checked::before {
   background: var(--priamry);
   content: '';
 }
 
-.todolist .content .todo_content input[type='checkbox'].checked::after {
+.todolist .content .todo_item input[type="checkbox"].checked::after {
   content: '';
   position: absolute;
   width: 14px;
@@ -192,46 +183,19 @@ ul, li {
   z-index: 9;
 }
 
-.todolist .content .todo_content span:nth-of-type(1) {
-  margin-left: 40px;
+.todolist .content .todo_item .checked + span {
+  color: #ddd;
+  text-decoration: line-through;
 }
 
-.todolist .content .todo_content span:nth-of-type(2) {
-  margin-left: auto;
+.todolist .content .todo_item .checked ~ label {
+  color: #ddd;
+  text-decoration: line-through;
 }
 
-.todolist .content .todo_edit {
-  width: 50px;
-  height: 50px;
-  left: -50px;
-  background: var(--edit);
-}
-
-.todolist .content .todo_remove {
-  width: 50px;
-  height: 50px;
-  right: -50px;
-  background: var(--remove);
-}
-
-.todolist .content .todo_item.edit {
-  padding-right: 50px;
-  -webkit-transform: translateX(50px);
-          transform: translateX(50px);
-}
-
-.todolist .content .todo_item.edit .todo_content::after {
-  width: 0;
-}
-
-.todolist .content .todo_item.remove {
-  padding-left: 50px;
-  -webkit-transform: translateX(-50px);
-          transform: translateX(-50px);
-}
-
-.todolist .content .todo_item.remove .todo_content::before {
-  width: 0;
+.todolist .content .todo_text {
+  margin-left: 20px;
+  font-size: 24px;
 }
 
 .todolist .handle {

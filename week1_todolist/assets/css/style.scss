@@ -91,12 +91,22 @@ $lineHeight: 50px;
         align-items: center;
         padding: 5px 0;
         border-bottom: 1px solid #ddd;
-        button:nth-of-type(1) {
+        .todo_edit {
           background: var(--edit);
           margin-left: auto;
+          &::after {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            content: "\f303";
+          }
         }
-        button:nth-of-type(2) {
+        .todo_remove {
           background: var(--remove);
+          &::after {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            content: "\f2ed";
+          }
         }
         input[type="checkbox"] {
           position: relative;
@@ -132,6 +142,16 @@ $lineHeight: 50px;
               transform: rotate(-55deg);
               z-index: 9;
             }
+          }
+        }
+        .checked {
+          + span {
+            color: #ddd;
+            text-decoration: line-through;
+          }
+          ~ label {
+            color: #ddd;
+            text-decoration: line-through;
           }
         }
       }
