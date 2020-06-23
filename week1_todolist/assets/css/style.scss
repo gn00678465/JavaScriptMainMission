@@ -91,16 +91,8 @@ $lineHeight: 50px;
         align-items: center;
         padding: 5px 0;
         border-bottom: 1px solid #ddd;
-        .todo_edit {
-          background: var(--edit);
-          margin-left: auto;
-          &::after {
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            content: "\f303";
-          }
-        }
         .todo_remove {
+          margin-left: auto;
           background: var(--remove);
           &::after {
             font-family: "Font Awesome 5 Free";

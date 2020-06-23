@@ -31,7 +31,6 @@ import { getDayFormate } from './api.js'
         <input type="checkbox" name="complate" class="${item.done ? 'checked' : ''}" id="todo_${item.timetamp}">
         <span class="todo_text">${item.createDay}</span>
         <label class="todo_text" for="todo_${item.timetamp}" data-btn="done">${item.todo}</label>
-        <button class="btn todo_edit" data-btn="edit"></button>
         <button class="btn todo_remove" data-btn="remove"></button>
       </li>
       `
@@ -60,12 +59,6 @@ import { getDayFormate } from './api.js'
     // else if (action === 'edit') editTodo (todo)
     else if (action === 'done') doneTodo (todo)
   }
-
-   //updateTodo
-  // function editTodo (todo) {
-  //   const index = dataProxy.findIndex( item => item === todo)
-  //   addTodoHandler()
-  // }
 
   function doneTodo (todo) {
     const index = dataProxy.findIndex( item => item === todo)

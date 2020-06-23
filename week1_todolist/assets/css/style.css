@@ -121,18 +121,8 @@ ul, li {
   border-bottom: 1px solid #ddd;
 }
 
-.todolist .content .todo_item .todo_edit {
-  background: var(--edit);
-  margin-left: auto;
-}
-
-.todolist .content .todo_item .todo_edit::after {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  content: "\f303";
-}
-
 .todolist .content .todo_item .todo_remove {
+  margin-left: auto;
   background: var(--remove);
 }
 
