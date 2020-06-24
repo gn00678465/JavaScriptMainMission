@@ -59,6 +59,12 @@ $lineHeight: 50px;
         color: var(--remove);
       }
     }
+    .count_todo {
+      color: var(--white);
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+    }
   }
   .content {
     background: var(--white);

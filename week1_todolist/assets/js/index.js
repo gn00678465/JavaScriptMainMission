@@ -7,6 +7,7 @@ import { getDayFormate } from './api.js'
   const clear = document.querySelector('.clear')
   const today = document.querySelector('.today')
   const todoList = document.querySelector('.list')
+  const showCount = document.querySelector('.count_todo')
   const data = JSON.parse(window.localStorage.getItem('todo')) || []
 
   let addStatus = false
@@ -28,14 +29,15 @@ import { getDayFormate } from './api.js'
     data.forEach(item => {
       str += `
       <li class="todo_item" data-timetamp="${item.timetamp}">
-        <input type="checkbox" name="complate" class="${item.done ? 'checked' : ''}" id="todo_${item.timetamp}">
+        <input type="checkbox" data-btn="done" name="complate" class="${item.done ? 'checked' : ''}" id="todo_${item.timetamp}">
         <span class="todo_text">${item.createDay}</span>
-        <label class="todo_text" for="todo_${item.timetamp}" data-btn="done">${item.todo}</label>
+        <label class="todo_text" for="todo_${item.timetamp}">${item.todo}</label>
         <button class="btn todo_remove" data-btn="remove"></button>
       </li>
       `
     })
     todoList.innerHTML =str
+    showCount.textContent = `目前有 ${countTodo()} 筆待辦事項`
     window.localStorage.setItem('todo',JSON.stringify(data))
   }
 
@@ -51,6 +53,7 @@ import { getDayFormate } from './api.js'
       })
       this.value= ''
     }
+    
     render()
   }
 
@@ -79,13 +82,18 @@ import { getDayFormate } from './api.js'
     render()
   }
 
+  // countTodo
+  function countTodo() {
+    let count = dataProxy.filter(item => item.done === false).length
+    return count
+  }
+
   const clickHandler = function (e) {
     let action, thisTodo
-    if (e.target.parentNode.nodeName === 'LI' && e.target.parentNode.classList.contains('todo_item')) {
+    if (e.target.parentNode.nodeName !== 'LI' && !e.target.parentNode.classList.contains('todo_item')) return
       action = e.target.dataset.btn
       let thisTimetamp = parseInt(e.target.parentNode.dataset.timetamp)
       thisTodo = dataProxy.filter( item => item.timetamp === thisTimetamp)
-    }
     operaterTodo(action, thisTodo[0])
   }
 

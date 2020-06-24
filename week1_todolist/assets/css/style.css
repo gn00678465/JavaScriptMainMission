@@ -80,6 +80,13 @@ ul, li {
   color: var(--remove);
 }
 
+.todolist .header .count_todo {
+  color: var(--white);
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
 .todolist .content {
   background: var(--white);
   height: 500px;
