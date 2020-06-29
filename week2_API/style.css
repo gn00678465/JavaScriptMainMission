@@ -1,0 +1,246 @@
+.postCard {
+  position: relative;
+  height: 0;
+  padding-bottom: calc(100% + 32px);
+  background: #dddddd;
+}
+
+.postCard .postCard__header {
+  position: absolute;
+  width: calc(100% + 16px + 4px);
+  padding: 8px 32px;
+  right: -4px;
+  top: calc(100% + 16px);
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  color: #fff;
+  letter-spacing: .01em;
+}
+
+.postCard .postCard__header::before, .postCard .postCard__header::after {
+  position: absolute;
+  content: '';
+  left: 0;
+  top: -16px;
+  width: 0;
+  border: 8px solid;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  z-index: 5;
+}
+
+.postCard .postCard__header::after {
+  top: auto;
+  bottom: 0;
+}
+
+.postCard .postCard__title {
+  width: 100%;
+  font-size: 1.8rem;
+}
+
+.postCard .postCard__price {
+  margin-right: auto;
+  font-size: 1.2rem;
+}
+
+.postCard .postCard__btn--active {
+  position: absolute;
+  right: 5px;
+  font-size: 60px;
+  top: -45px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.postCard .postCard__btn--active.span {
+  -webkit-animation: span .5s infinite;
+          animation: span .5s infinite;
+}
+
+.postCard .postCard__img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+
+.postCard .postCard__img .img_fluid {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.postCard .postCard__content {
+  overflow: hidden;
+}
+
+.postCard .postCard__bg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: -16px;
+  left: 0;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  opacity: 0;
+}
+
+.postCard .postCard__description {
+  position: absolute;
+  top: 100%;
+  bottom: 0;
+  overflow: hidden;
+  padding: 16px 32px;
+  line-height: 24px;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  opacity: 0;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  z-index: 5;
+  font-weight: 600;
+}
+
+.postCard .postCard__footer {
+  overflow: visible;
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 0;
+  right: 0;
+  height: 82px;
+  padding: 16px 16px;
+  z-index: 7;
+  opacity: 0;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.postCard .postCard__footer .sns_btn {
+  font-size: 40px;
+  margin-right: auto;
+}
+
+.active .postCard__header {
+  top: 0;
+}
+
+.active .postCard__header::after {
+  bottom: -16px;
+}
+
+.active .postCard__bg {
+  padding-top: 96px;
+  z-index: 5;
+  opacity: 0.7;
+}
+
+.active .postCard__description {
+  top: 96px;
+  opacity: 1;
+}
+
+.active .postCard__footer {
+  opacity: 1;
+}
+
+.pure__btn {
+  font-size: 100%;
+  padding: .3rem 1rem;
+  color: #fff;
+  border-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  border-radius: 2px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.pure__btn:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.color .postCard__header {
+  background: #F44336;
+}
+
+.color .postCard__header::before {
+  border-top-color: transparent;
+  border-right-color: #B71C1C;
+  border-bottom-color: #B71C1C;
+  border-left-color: transparent;
+}
+
+.color .postCard__header::after {
+  border-color: transparent;
+}
+
+.color .postCard__btn--active {
+  color: #B71C1C;
+}
+
+.color.active .postCard__header::before {
+  border: transparent;
+}
+
+.color.active .postCard__header::after {
+  border-top-color: #B71C1C;
+  border-right-color: #B71C1C;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+
+.color.active .postCard__bg {
+  background: #FFEBEE;
+}
+
+.color.active .postCard__footer {
+  background: #FFCDD2;
+}
+
+.color.active .postCard__footer .sns_btn {
+  color: #B71C1C;
+}
+
+@-webkit-keyframes span {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+
+@keyframes span {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+/*# sourceMappingURL=style.css.map */

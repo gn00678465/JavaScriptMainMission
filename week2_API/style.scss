@@ -1,0 +1,210 @@
+$space: 16px;
+
+.postCard {
+  position: relative;
+  height: 0;
+  padding-bottom: calc(100% + #{$space * 2});
+  background: #dddddd;
+  .postCard {
+    &__header {
+      position: absolute;
+      width: calc(100% + #{$space} + #{$space / 4});
+      padding: $space / 2 $space*2;
+      right: -$space / 4;
+      top: calc(100% + #{$space});
+      transition: all 0.3s;
+      z-index: 10;
+      display: flex;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      color: #fff;
+      letter-spacing: .01em;
+      &::before, &::after {
+        position: absolute;
+        content: '';
+        left: 0;
+        top: -$space;
+        width: 0;
+        border: $space / 2 solid;
+        transition: all 0.3s;
+        // color
+        z-index: 5;
+      }
+      &::after {
+        top: auto;
+        bottom: 0;
+      }
+    }
+    &__title {
+      width: 100%;
+      font-size: 1.8rem;
+    }
+    &__price {
+      margin-right: auto;
+      font-size: 1.2rem;
+    }
+    &__btn--active {
+      position: absolute;
+      right: 5px;
+      font-size: 60px;
+      top: -45px;
+      cursor: pointer;
+      z-index: 5;
+      &.span {
+        animation: span .5s infinite;
+      }
+    }
+    &__img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      .img_fluid {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+    }
+    &__content {
+      overflow: hidden;
+    }
+    &__bg {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: - $space;
+      left: 0;
+      transition: all 0.3s;
+      opacity: 0;
+    }
+    &__description {
+      position: absolute;
+      top: 100%;
+      bottom: 0;
+      overflow: hidden;
+      padding: $space $space * 2;
+      line-height: $space * 1.5;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 5;
+      font-weight: 600;
+    }
+    &__footer {
+      overflow: visible;
+      position: absolute;
+      top: calc(100% + #{$space});
+      left: 0;
+      right: 0;
+      height: 82px;
+      padding: $space $space;
+      z-index: 7;
+      opacity: 0;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      .sns_btn {
+        font-size: 40px;
+        margin-right: auto;
+      }
+    }
+  }
+}
+
+.active {
+  .postCard {
+    &__header {
+      top: 0;
+      &::after {
+        bottom: - $space;
+      }
+    }
+    &__bg {
+      padding-top: 96px;
+      z-index: 5;
+      opacity: 0.7;
+    }
+    &__description {
+      top: 96px;
+      opacity: 1;
+    }
+    &__footer {
+      opacity: 1;
+    }
+  }
+}
+
+.pure__btn {
+  font-size: 100%;
+  padding: .3rem 1rem;
+  color: #fff;
+  border-color: rgba(0, 0, 0, 0.3);;
+  background-color: rgba(0,0,0,.1);
+  text-decoration: none;
+  border-radius: 2px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  &:hover {
+    background-color: rgba(0,0,0,.2);
+  }
+}
+
+.color {
+  .postCard {
+    &__header {
+      background: #F44336;
+      &::before {
+        border-top-color: transparent;
+        border-right-color: #B71C1C;
+        border-bottom-color: #B71C1C;
+        border-left-color: transparent;
+      }
+      &::after {
+        border-color: transparent;
+      }
+    }
+    &__btn--active {
+      color: #B71C1C;
+    }
+  }
+  &.active {
+    .postCard {
+      &__header {
+        &::before {
+          border: transparent;
+        }
+        &::after {
+          border-top-color: #B71C1C;
+          border-right-color: #B71C1C;
+          border-bottom-color: transparent;
+          border-left-color: transparent;
+        }
+      }
+      &__bg {
+        background: #FFEBEE;
+      }
+      &__footer {
+        background: #FFCDD2;
+        .sns_btn {
+          color: #B71C1C;
+        }
+      }
+    }
+  }
+}
+
+
+@keyframes span {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(450deg);
+  }
+}
