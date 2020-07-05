@@ -61,7 +61,15 @@ var obj = {
     })
     row.innerHTML = str
     this.btnAction()
+  },
+  delData () {
+    axios.delete(`${this.config.url}${this.config.uuid}/admin/ec/product/mU6QbqjfvtAXHc1gCn5OTuXhfFWJGNYuktb3l7ULV0GssKyKbCYgcnmqA6iKB5Rk`)
+    .then((res) => console.log(res))
   }
 }
 
 obj.getData();
+
+document.querySelector('.Delete').addEventListener('click', function () {
+  obj.delData ()
+})
