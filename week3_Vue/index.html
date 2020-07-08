@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css'/>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="container mt-5" v-cloak>
+        <div class="row">
+          <div class="col">
+            <div class="d-flex justify-content-end w-100">
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-toggle="modal"
+                @click.prevent="clickHandler($event)"
+                data-action="New"
+              >
+                建立新產品
+              </button>
+            </div>
+          </div>
+          <div class="w-100"></div>
+          <!-- table -->
+          <div class="col mt-4 px-5">
+            <table class="table table-hover">
+              <thead class="bg-info text-white">
+                <tr>
+                  <th scope="col" width="50px">#</th>
+                  <th scope="col">分類</th>
+                  <th scope="col">產品名稱</th>
+                  <th scope="col">原價</th>
+                  <th scope="col">售價</th>
+                  <th scope="col" width="120px">是否啟用</th>
+                  <th scope="col" width="150px">編輯</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(product, index) in products" :key="product.id">
+                  <th scope="row" >{{index + 1}}</th>
+                  <td>{{product.category}}</td>
+                  <td>{{product.title}}</td>
+                  <td class="text-right">{{product.origin_price}}</td>
+                  <td class="text-right">{{product.price}}</td>
+                  <td class="text-center">
+                    <i class="fas fa-check text-success" v-if="product.enabled"></i>
+                    <i class="fas fa-times text-danger" v-else></i>
+                  </td>
+                  <td class="">
+                    <div
+                      class="btn-group"
+                      role="group"
+                      aria-label="Basic example"
+                    >
+                      <button type="button" class="btn btn-outline-primary fas fa-edit" @click.prevent="clickHandler($event, product)" data-action="Edit">
+                      </button>
+                      <button type="button" class="btn btn-outline-danger fas fa-trash-alt" @click.prevent="clickHandler($event, product)" data-action="Del">
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="productModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header bg-secondary">
+              <h5 class="modal-title text-light" id="exampleModalLabel">
+                {{showAction}}產品
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="container-fluid">
+                  <div class="row">
+                    <!-- img input -->
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label for="inputimgUrl">輸入圖片網址</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="inputimgUrl"
+                          placeholder="請輸入圖片網址"
+                          v-model="input.imageUrl"
+                        />
+                      </div>
+                      <img :src="input.imageUrl" alt="" class="img-fluid mt-3">
+                    </div>
+                    <div class="col">
+                      <div class="container-fluid">
+                        <!-- title input -->
+                        <div class="form-group">
+                          <label for="inputTitle">標題</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="inputTitle"
+                            placeholder="請輸入標題"
+                            v-model="input.title"
+                          />
+                        </div>
+                        <!-- category & unit -->
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputCategory">分類</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="inputCategory"
+                              placeholder="請輸入分類"
+                              v-model="input.category"
+                            />
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="inputUnit">單位</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="inputUnit"
+                              placeholder="請輸入單位"
+                              v-model="input.unit"
+                            />
+                          </div>
+                        </div>
+                        <!-- price -->
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                              <label for="inputOrgPrice">原價</label>
+                              <input
+                                type="number"
+                                class="form-control"
+                                id="inputOrgPrice"
+                                placeholder="請輸入原價"
+                                v-model="input.origin_price"
+                              />
+                            </div>
+                            <div class="form-group col-md-6">
+                              <label for="inputPrice">售價</label>
+                              <input
+                                type="number"
+                                class="form-control"
+                                id="inputPrice"
+                                placeholder="請輸入售價"
+                                v-model="input.price"
+                              />
+                            </div>
+                      </div>
+                      <hr>
+                        <!-- content -->
+                          <div class="form-group">
+                            <label for="inputDescript">產品描述</label>
+                            <textarea class="form-control" id="inputDescript" rows="3" placeholder="請輸入產品描述"
+                            v-model="input.description"></textarea>
+                          </div>
+                        <!-- descript -->
+                          <div class="form-group">
+                            <label for="inputContent">說明內容</label>
+                            <textarea class="form-control" id="inputContent" rows="3" placeholder="請輸入說明內容" v-model="input.content"></textarea>
+                          </div>
+                          <!-- checkbox -->
+                          <div class="form-row">
+                            <div class="col">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkEnable" v-model="input.enabled">
+                                <label class="form-check-label" for="checkEnable">
+                                  是否啟用
+                                </label>
+                              </div>
+                            </div>
+                            <!-- 5 star -->
+                          <div class="form-group col-md-6 text-center fiveStar">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" v-model="input.stars">
+                              <label class="form-check-label far fa-star" for="inlineRadio1"></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" v-model="input.stars">
+                              <label class="form-check-label far fa-star" for="inlineRadio2"></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3" v-model="input.stars">
+                              <label class="form-check-label far fa-star" for="inlineRadio3"></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4" v-model="input.stars">
+                              <label class="form-check-label far fa-star" for="inlineRadio4"></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="5" v-model="input.stars">
+                              <label class="form-check-label far fa-star" for="inlineRadio5"></label>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                  </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-dismiss="modal"
+              >
+                取消
+              </button>
+              <button type="button" class="btn btn-outline-primary" @click.prevent="alertshow">
+                確認
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    
+    <script src="index.js"></script>
+  </body>
+</html>
