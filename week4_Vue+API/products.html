@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>products</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <div is="navbar"></div>
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col">
+            <div class="d-flex justify-content-end w-100">
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-toggle="modal"
+                @click.prevent="show()"
+                data-action="New"
+              >
+                建立新產品
+              </button>
+            </div>
+          </div>
+          <div class="w-100"></div>
+          <!-- table -->
+          <div class="col mt-4 px-5">
+            <table class="table table-hover">
+              <thead class="bg-info text-white">
+                <tr>
+                  <th scope="col" width="50px">#</th>
+                  <th scope="col">分類</th>
+                  <th scope="col">產品名稱</th>
+                  <th scope="col">原價</th>
+                  <th scope="col">售價</th>
+                  <th scope="col" width="120px">是否啟用</th>
+                  <th scope="col" width="150px">編輯</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  is="productItem"
+                  v-for="(product, index) in products"
+                  :key="product.id"
+                  :product="product"
+                  :count="index"
+                ></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- modal -->
+      <modal></modal>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="src/products/index.js" type="module"></script>
+  </body>
+</html>
