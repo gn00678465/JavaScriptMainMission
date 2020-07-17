@@ -24,11 +24,13 @@ export default {
           type="button"
           class="btn btn-outline-primary fas fa-edit"
           data-action="Edit"
+          @click="editClick"
         ></button>
         <button
           type="button"
           class="btn btn-outline-danger fas fa-trash-alt"
           data-action="Del"
+          @click="delClick"
         ></button>
       </div>
     </td>
@@ -47,5 +49,13 @@ export default {
   data() {
     return {};
   },
-  created() {}
+  created() {},
+  methods: {
+    editClick() {
+      this.$emit("editclick", this.product);
+    },
+    delClick() {
+      this.$emit("delclick", this.product);
+    }
+  }
 };
