@@ -14,7 +14,6 @@ VeeValidate.configure({
 var app = new Vue({
   el: '#app',
   data: {
-    payments: ['WebATM','ATM','Barcode','Credit','ApplePay','GooglePay'],
     payForm: {}
   },
   created() {
