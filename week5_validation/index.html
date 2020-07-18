@@ -32,7 +32,7 @@
               <span class="invalid-feedback">{{ errors[0] }}</span>
           </validation-provider>
           <!-- tel -->
-            <validation-provider class="form-group" tag="div" rules="required|min:8|integer" v-slot="{ errors, classes }">
+            <validation-provider class="form-group" tag="div" rules="required|digits:8" v-slot="{ errors, classes }">
               <label for="tel">電話</label><small class="required"></small>
               <input type="tel" class="form-control" :class="classes" name="tel" id="tel" placeholder="請輸入收件人電話" v-model="payForm.tel">
               <span class="invalid-feedback">{{ errors[0] }}</span>
