@@ -1,0 +1,13 @@
+.form-group .required {
+  color: red;
+  position: relative;
+  height: 100%;
+}
+
+.form-group .required::after {
+  content: '*';
+  position: absolute;
+  top: -7px;
+  left: 2px;
+}
+/*# sourceMappingURL=style.css.map */
