@@ -5,16 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>week5 cart page</title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'/>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css'/>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div id="app">
     <div class="container mt-5">
       <div class="row">
-        <div class="col-8 border">
+        <div class="col-8">
           <div class="container">
             <div class="row">
-              <div class="col w-100"></div>
+              <div class="col w-100">
+                <!-- cart -->
+                <div class="cart">
+                  <!-- Title -->
+                  <div class="cart__title">
+                    Shopping Bag
+                  </div>
+                  <!-- Product -->
+                  <div class="cart__item">
+                    <div class="buttons">
+                      <span class="fas fa-times delete-btn"></span>
+                    </div>
+                    <div class="cart__image">
+                      <img src="https://designmodo.com/demo/shopping-cart/item-1.png" alt="" class="img-fluid" />
+                    </div>
+                    <div class="cart__description">
+                      <div>Common Projects</div>
+                      <div>Bball High</div>
+                      <div>White</div>
+                    </div>
+                    <div class="cart__quantity">
+                      <button class="plus-btn" type="button" name="button">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                      <input type="text" name="name" value="1">
+                      <button class="minus-btn" type="button" name="button">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                    </div>
+                    <div class="cart__price">$549</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

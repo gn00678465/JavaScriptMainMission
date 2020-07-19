@@ -1,5 +1,5 @@
 .form-group {
-  .required {
+  small.required {
     color: red;
     position: relative;
     height: 100%;
@@ -8,6 +8,133 @@
       position: absolute;
       top: -7px;
       left: 2px;
+    }
+  }
+}
+
+// cart list
+.cart {
+  width: 100%;
+  box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  .cart {
+    &__title {
+      line-height: 40px;
+      border-bottom: 1px solid #E1E8EE;
+      padding: 10px 30px;
+      color: #5E6977;
+      font-size: 18px;
+      font-weight: 400;
+    }
+    &__item {
+      padding: 20px 30px;
+      height: 120px;
+      display: flex;
+      &:nth-child(n) {
+        border-bottom:  1px solid #E1E8EE;
+        border-top:  1px solid #E1E8EE;
+      }
+      &:first-child {
+        border-top: none
+      }
+      &:last-child {
+        border-bottom:  none;
+      }
+      .buttons {
+        position: relative;
+        padding-top: 30px;
+        margin-right: 30px;
+      }
+      .delete-btn {
+        display: inline-block;
+        Cursor: pointer;
+      }
+    }
+    &__image {
+      margin-right: 2rem;
+    }
+    &__description {
+      margin-right: 60px;
+      > div {
+        white-space: nowrap;
+        display: block;
+        font-size: 14px;
+      }
+    }
+    &__quantity {
+      line-height: 79px;
+      margin-left: 30px;
+      margin-right: 30px;
+      input,button[class*=btn] {
+        line-height: 1;
+        height: auto;
+        vertical-align: middle;
+      }
+      input {
+        -webkit-appearance: none;
+        border: none;
+        text-align: center;
+        width: 32px;
+        font-size: 16px;
+        color: #43484D;
+        font-weight: 300;
+      }
+      button[class*=btn] {
+        width: 30px;
+        height: 30px;
+        background-color: #E1E8EE;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+      }
+      button:focus,
+      input:focus {
+        outline:0;
+      }
+      .fas {
+        font-size: small;
+      }
+    }
+    &__price {
+      display: block;
+      text-align: center;
+      line-height: 79px;
+      font-size: 1.5rem;
+      color: #43484D;
+      font-weight: 300;
+      flex: 1 0 0%;
+    }
+  }
+}
+
+// RWD
+
+@media (max-width: 800px) {
+  .cart {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    .cart {
+      &__item {
+        height: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      &__image,
+      &__quantity,
+      &__description {
+        width: 100%;
+        text-align: center;
+        margin: 6px 0;
+      }
+      &__image img {
+        width: 50%;
+      }
+    }
+    .buttons {
+      margin-right: 20px;
     }
   }
 }

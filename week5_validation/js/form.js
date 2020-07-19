@@ -41,8 +41,8 @@ export default {
         <textarea class="form-control" id="message" rows="3" placeholder="請輸入留言" v-model="payForm.message"></textarea>
       </div>
       <!-- submit btn -->
-      <div class="w-100 d-flex justify-content-end">
-        <button type="submit" :disabled="invalid" class="btn btn-primary ml-auto">送出訂單</button>
+      <div class="w-100">
+        <button type="submit" :disabled="invalid" class="btn btn-primary w-100">送出訂單</button>
       </div>
     </form>
   </validation-observer>
