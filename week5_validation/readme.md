@@ -15,4 +15,4 @@ async function getData () {
 }
 ```
 
-## [**完成作品**](https://gn00678465.github.io/JavaScriptMainMission/week4_Vue+API/)
+## [**完成作品**](https://gn00678465.github.io/JavaScriptMainMission/week5_validation/)
