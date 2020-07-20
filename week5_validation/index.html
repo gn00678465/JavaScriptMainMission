@@ -6,63 +6,96 @@
   <title>week5 cart page</title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'/>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css'/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3.3.2/dist/vue-loading.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue2-perfect-scrollbar@1.5.0/dist/vue2-perfect-scrollbar.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div id="app">
-    <div class="container mt-5">
-      <div class="row">
-        <div class="col-8">
-          <div class="container">
-            <div class="row">
-              <div class="col w-100">
-                <!-- cart -->
-                <div class="cart">
-                  <!-- Title -->
-                  <div class="cart__title">
-                    Shopping Bag
-                  </div>
-                  <!-- Product -->
-                  <div class="cart__item">
-                    <div class="buttons">
-                      <span class="fas fa-times delete-btn"></span>
-                    </div>
-                    <div class="cart__image">
-                      <img src="https://designmodo.com/demo/shopping-cart/item-1.png" alt="" class="img-fluid" />
-                    </div>
-                    <div class="cart__description">
-                      <div>Common Projects</div>
-                      <div>Bball High</div>
-                      <div>White</div>
-                    </div>
-                    <div class="cart__quantity">
-                      <button class="plus-btn" type="button" name="button">
-                        <i class="fas fa-plus"></i>
-                      </button>
-                      <input type="text" name="name" value="1">
-                      <button class="minus-btn" type="button" name="button">
-                        <i class="fas fa-minus"></i>
-                      </button>
-                    </div>
-                    <div class="cart__price">$549</div>
-                  </div>
-                </div>
+    <!-- loading -->
+    <div class="vld-parent">
+      <loading :active.sync="isLoading" 
+      :can-cancel="true"
+      :is-full-page="fullPage"></loading>
+  </div>
+  <!-- cards -->
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-4" v-for="p in productList" :key="p.id">
+        <!-- card -->
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img :src="p.imageUrl[0]" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title mb-1">{{p.title}}</h5>
+                <div class="mb-1"><small class="badge badge-pill badge-info">{{p.category}}</small></div>
+                <p class="card-text text-truncate">{{p.content}}</p>
+                <p class="card-text w-100 d-flex justify-content-around align-items-center">
+                  <span class="h6">售價: {{p.price|Currency|Dollar}}</span>
+                  <button class="btn btn-outline-primary btn-sm" type="button" @click='addCart(p)'>
+                    <!-- <div class="vld-parent">
+                      <loading :active.sync="addIsLoading" 
+                        :loader="dots"
+                        :is-full-page="false"
+                        :can-cancel="true" ></loading>
+                    </div> -->
+                    加入購物車</button>
+                </p>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-4">
-          <pay-form />
+        <!--  -->
+      </div>
+    </div>
+  </div>
+  <!-- cart && payform -->
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-8">
+          <!-- cart -->
+          <div class="cart">
+            <!-- Title -->
+            <div class="cart__title w-100">
+              <span class="title">購物車</span>
+              <span class="price">{{calcTotalPrice|Currency|dollar}}</span>
+              <a href="#" class="btn btn-outline-danger ml-1" @click.prevent="delAllCart">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+              <div class="cart__body">
+                <cart-item v-for="cart in cartList" :key="cart.product.id"
+                :cartItem="cart"
+                :ref="cart.product.id"
+                @update-cart="editCart"
+                @del-cart="delCart" />
+              </div>
+          </div>
+        </div>
+        <div class="col-4 h-100">
+          <div class="payform">
+            <!-- Title -->
+            <div class="payform__title">付款人資訊</div>
+            <div class="payform__content">
+              <pay-form />
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
   <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js'></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/3.3.0/vee-validate.full.min.js"></script>
-  <script src="js/components.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3.3.2/dist/vue-loading.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue2-perfect-scrollbar@1.5.0/dist/vue2-perfect-scrollbar.umd.min.js"></script>
+  <script src="js/AllComponents.js" type="module"></script>
   <script src="js/index.js" type="module"></script>
 </body>
 </html>

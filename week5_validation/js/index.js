@@ -14,18 +14,115 @@ VeeValidate.configure({
 var app = new Vue({
   el: '#app',
   data: {
-    payForm: {}
+    payForm: {},
+    productList: [],
+    cartList: [],
+    isLoading: false,
+    fullPage: true,
+    addIsLoading: false,
+    editLoading: false
   },
   created() {
-    
+    this.getData()
+    this.getCartList()
   },
   mounted() {
-    
   },
   methods: {
-    
+    async getData () {
+      try {
+        const API = await import('./API_frontstage.js')
+        this.isLoading = true
+        API.ProductListAPI()
+        .then ((response) => {
+          this.productList = response.data.data
+          this.isLoading = false
+        })
+        .catch((err) => {console.log(err)})
+      }
+      catch (err) {
+        console.log(err)
+      }
+    },
+    async getCartList () {
+      try {
+        const API = await import('./API_frontstage.js')
+        this.isLoading = true
+        await API.shoppingListAPI()
+        .then ((response) => {
+          this.cartList = response.data.data
+          this.isLoading = false
+        })
+        .catch((err) => {console.log(err)})
+      }
+      catch (err) {
+        console.log(err)
+      }
+    },
+    async addCart (data) {
+      try {
+        this.addIsLoading = true
+        const product = data.id
+        const quantity = 1
+        const API = await import('./API_frontstage.js')
+        // console.log({product, quantity})
+        API.CartAPI('post',{product, quantity})
+          .then((res) => {
+            // console.log(res)
+            if (res.status === 200) this.addIsLoading = false
+            this.getCartList()
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+      catch (err) { console.log(err) }
+    },
+    async editCart (id, quantity) {
+      try {
+        this.$refs[id][0].loading.isLoading = true
+        const API = await import('./API_frontstage.js')
+        // console.log({'product': id, quantity})
+        API.CartAPI('patch',{'product': id, quantity})
+          .then((res) => {
+            // console.log(200)
+            if (res.status === 200) {
+              this.$refs[id][0].loading.isLoading = false
+              this.getCartList()
+            }
+          })
+          .catch((err) => console.log(err))
+      }
+      catch (err) {console.log(err)}
+    },
+    async delCart (id) {
+      try {
+        const API = await import('./API_frontstage.js')
+      // console.log(module.delCart(id))
+      API.delCartAPI(id)
+        .then((res) => {
+          if (res.status === 200) this.getCartList()
+        })
+        .catch((err) => console.log(err))
+      }
+      catch (err) {console.log(err)}
+    },
+    async delAllCart () {
+      try {
+        const API = await import('./API_frontstage.js')
+        API.delAllCartAPI()
+          .then(res => {
+            if (res.status === 200) this.getCartList()
+          })
+          .catch((err) => console.log(err))
+      }
+      catch (err) {console.log(err)}
+    }
   },
   computed: {
-    
-  },
+    calcTotalPrice () {
+      return this.cartList.map( cart => cart.quantity * cart.product.price)
+      .reduce((prev, current) => prev + current, 0)
+    }
+  }
 })

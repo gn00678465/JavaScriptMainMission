@@ -1,7 +1,8 @@
 export default {
+  name: 'payForm',
   template: `
   <validation-observer v-slot="{ invalid }">
-    <form action="post">
+    <form action="post" @submit.prevent="submitHandler">
       <!-- name -->
       <validation-provider class="form-group" tag="div" rules="required" v-slot="{ errors, classes }">
         <label for="name">收件人姓名</label><small class="required"></small>
@@ -52,5 +53,10 @@ export default {
       payments: ['WebATM','ATM','Barcode','Credit','ApplePay','GooglePay'],
       payForm: {}
     }
-  }
+  },
+  methods: {
+    submitHandler() {
+      console.log('送出')
+    }
+  },
 }
