@@ -54,10 +54,10 @@ export default {
   },
   methods: {
     quantityHandler (fix) {
-      if (this.quantity < 1 || this.quantity === 0) {
-        this.quantity = 1
-      } else {
+      if (this.quantity > 1) {
         this.quantity += fix
+      } else {
+        this.deleteCart()
       }
     },
     updateCart() {
