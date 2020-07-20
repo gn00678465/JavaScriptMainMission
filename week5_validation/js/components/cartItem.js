@@ -54,11 +54,8 @@ export default {
   },
   methods: {
     quantityHandler (fix) {
-      if (this.quantity > 1) {
-        this.quantity += fix
-      } else {
-        this.deleteCart()
-      }
+      this.quantity += fix
+      if(this.quantity <= 0 ) this.deleteCart()
     },
     updateCart() {
       this.$emit('update-cart', this.cartData.id, this.quantity)
