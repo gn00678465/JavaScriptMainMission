@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div id="app">
+  <div id="app" v-cloak>
     <!-- loading -->
     <div class="vld-parent">
       <loading :active.sync="isLoading" 
@@ -36,13 +36,14 @@
                 <p class="card-text w-100 d-flex justify-content-around align-items-center">
                   <span class="h6">售價: {{p.price|Currency|Dollar}}</span>
                   <button class="btn btn-outline-primary btn-sm" type="button" @click='addCart(p)'>
-                    <!-- <div class="vld-parent">
-                      <loading :active.sync="addIsLoading" 
-                        :loader="dots"
+                    <div class="vld-parent">
+                      <loading :active.sync="addCartLoading.isLoading" 
+                        :loader="addCartLoading.loader"
                         :is-full-page="false"
-                        :can-cancel="true" ></loading>
-                    </div> -->
-                    加入購物車</button>
+                        :can-cancel="false"></loading>
+                        加入購物車
+                    </div>
+                    </button>
                 </p>
               </div>
             </div>

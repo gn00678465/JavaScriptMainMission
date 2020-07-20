@@ -19,7 +19,10 @@ var app = new Vue({
     cartList: [],
     isLoading: false,
     fullPage: true,
-    addIsLoading: false,
+    addCartLoading: {
+      isLoading: false,
+      loader: 'dots'
+    },
     editLoading: false
   },
   created() {
@@ -61,7 +64,7 @@ var app = new Vue({
     },
     async addCart (data) {
       try {
-        this.addIsLoading = true
+        this.addCartLoading.isLoading = true
         const product = data.id
         const quantity = 1
         const API = await import('./API_frontstage.js')
@@ -69,7 +72,7 @@ var app = new Vue({
         API.CartAPI('post',{product, quantity})
           .then((res) => {
             // console.log(res)
-            if (res.status === 200) this.addIsLoading = false
+            if (res.status === 200) this.addCartLoading.isLoading = false
             this.getCartList()
           })
           .catch((err) => {
