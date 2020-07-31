@@ -1,0 +1,9 @@
+@mixin font($size, $line-height: auto) {
+  $line: line($size);
+  font-size: $size;
+  @if $line-height == auto or $line-height < $line {
+    line-height: $line;
+  } @else {
+    line-height: $line-height
+  }
+}

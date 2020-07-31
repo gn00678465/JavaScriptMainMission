@@ -1,0 +1,13 @@
+$baseLine: 10px;
+
+@function space($index: 1) {
+  @return $basePadding * $index;
+}
+
+@function rhythm($level) {
+  @return $baseLine * ceil($level);
+}
+
+@function line($size) {
+  @return rhythm($size * 1.2 / $baseLine);
+}

@@ -1,0 +1,16 @@
+@mixin input(
+  $fontSize,
+  $radius: null
+) {
+  display: block;
+  width: 100%;
+  padding-left: 1.25rem;
+  padding-top: 0.75rem;
+  padding-bottom: 1rem;
+  font-size: $fontSize;
+  box-shadow: inset 0 1px 3px #ddd;
+  border-radius: $radius;
+  vertical-align: middle;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}

@@ -1,0 +1,23 @@
+@mixin square($width) {
+  height: $width;
+  width: $width;
+};
+
+@mixin circle($radius) {
+  height: $radius;
+  width: $radius;
+  border-radius: 50%;
+};
+
+@mixin checked(
+  $width
+) {
+  display: block;
+  height: $width * 2;
+  width: $width;
+  border: solid white;
+  border-width: 0 $width / 2 $width / 2 0;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg)
+}
