@@ -26,6 +26,7 @@
       </table>
     </div>
     <Pagination :total_pages="total_page" :page.sync="page" />
+    <Modal ref="modal"/>
   </div>
 </template>
 
@@ -37,7 +38,12 @@ import backend from '@/assets/Backend_mixin';
 
 export default {
   name: 'Products',
-  components: { DashboardProductsItem, Pagination, BtnGroup },
+  components: {
+    DashboardProductsItem,
+    Pagination,
+    BtnGroup,
+    Modal: () => import('@/components/Modal.vue'),
+  },
   mixins: [backend],
   created() {
     this.getProductList();
@@ -80,7 +86,7 @@ export default {
       this.destroyProduct(item.id);
     },
     createHandler() {
-      console.log('this is new');
+      this.$refs.modal.showModal = true;
     },
   },
   computed: {
@@ -103,7 +109,9 @@ $thead: #c9dff0;
   float: right;
   // position: absolute;
 }
-
+.vld-parent {
+  min-height: 200px;
+}
 .lists {
   display: block;
   margin: 0 auto;
@@ -127,6 +135,7 @@ $thead: #c9dff0;
   width: 100%;
   font-size: 1.2em;
   margin-bottom: 15px;
+  min-height: 200px;
   thead {
     background: $thead;
     tr th {
