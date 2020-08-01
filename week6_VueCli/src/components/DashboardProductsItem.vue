@@ -4,7 +4,9 @@
     <td>{{prodItem.title}}</td>
     <td>{{prodItem.origin_price}}</td>
     <td>{{prodItem.price}}</td>
-    <td><toggler :prodId="prodItem.id.substr(0, 5)"/></td>
+    <td>
+      <toggler :prodId="prodItem.id.substr(0, 5)" :disabled="true" :checked="prodItem.enabled"/>
+      </td>
     <td><BtnGroup :btns="btns" @emitHandler="emitHandler"/></td>
   </tr>
 </template>
@@ -26,7 +28,7 @@ export default {
     return {
       btns: [
         {
-          class: 'secondary',
+          class: 'primary',
           outline: true,
           content: '',
           icon: 'edit',

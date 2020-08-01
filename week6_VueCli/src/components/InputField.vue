@@ -1,12 +1,16 @@
 <template>
   <validation-provider
       tag="div"
-      rules="required"
+      :rules="rules"
       class="form-group"
-      v-slot="{ errors }"
+      v-slot="{ errors, classes }"
     >
-    <label>First Name</label>
-    <input class="form-control" type="text">
+    <label>{{ label }}：</label>
+    <input class="form-control" v-if="typeHandler" :type="type" :placeholder="placeholder"
+    :name="label" :value="value" @input="$emit('input', $event.target.value)" :class="classes"/>
+    <textarea class="form-control" v-else :name="label" id="" :rows="rows" :class="classes"
+    :placeholder="placeholder" :value="value" @input="$emit('input', $event.target.value)">
+    </textarea>
     <!-- 錯誤訊息 -->
     <span class="error">{{ errors[0] }}</span>
   </validation-provider>
@@ -15,8 +19,33 @@
 <script>
 export default {
   name: 'InputField',
+  props: {
+    label: {
+      type: String,
+    },
+    type: {
+      type: String,
+      default: 'text',
+    },
+    placeholder: {
+      type: String,
+    },
+    rules: {
+      default: '',
+    },
+    rows: {
+      type: Number,
+      default: 5,
+    },
+    value: {},
+  },
   data() {
     return {};
+  },
+  computed: {
+    typeHandler() {
+      return !(this.type === 'textarea');
+    },
   },
 };
 </script>
@@ -58,6 +87,11 @@ export default {
       background-position: right calc(.375em + .1875rem) center;
       background-size: calc(.75em + .375rem) calc(.75em + .375rem);
     }
+  }
+  .error {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: #dc3545;
   }
 }
 

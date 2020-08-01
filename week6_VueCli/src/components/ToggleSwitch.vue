@@ -1,6 +1,8 @@
 <template>
   <div>
-    <input type="checkbox" :id="prodId" v-model="isEnable"/><label :for="prodId">Toggle</label>
+    <input type="checkbox" :id="prodId" :disabled="disabled"
+    :checked="checked" @change="change($event)" />
+    <label :for="prodId" :class="{disabled: disabled}">Toggle</label>
   </div>
 </template>
 
@@ -12,11 +14,23 @@ export default {
       type: String,
       required: true,
     },
+    checked: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
-      isEnable: false,
     };
+  },
+  methods: {
+    change(e) {
+      this.$emit('input', e.target.checked);
+    },
   },
 };
 </script>
@@ -58,7 +72,13 @@ label {
     transition: 0.3s;
   }
 }
-label:active:after {
+label:not(.disabled):active:after {
   width: $toggle-size * .65;
+}
+
+label.disabled {
+  cursor: auto;
+  user-select: none;
+  opacity: 0.65;
 }
 </style>

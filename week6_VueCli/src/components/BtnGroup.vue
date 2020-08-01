@@ -27,9 +27,6 @@ export default {
     };
   },
   methods: {
-    emitClick(action) {
-      this.$emit('click', action);
-    },
   },
   computed: {
     btnLength() {
@@ -47,8 +44,8 @@ export default {
 
 $colors: (
   default: #434a54,
-  primary: #ac92ec,
-  secondary: #5d9cec,
+  primary: #5d9cec,
+  secondary: #ac92ec,
   info: #4fc1e9,
   success: #8cc152,
   error: #ed5565,

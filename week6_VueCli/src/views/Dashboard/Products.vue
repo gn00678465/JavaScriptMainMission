@@ -80,13 +80,18 @@ export default {
       this[`${action}Handler`](item);
     },
     editHandler(item) {
-      console.log('this is edit', item);
+      this.$refs.modal.showModal = true;
+      this.$refs.modal.modalTitle = '編輯產品';
+      console.log(item);
     },
     delHandler(item) {
       this.destroyProduct(item.id);
     },
     createHandler() {
       this.$refs.modal.showModal = true;
+      this.$refs.modal.modalTitle = '新增產品';
+    },
+    createProd() {
     },
   },
   computed: {

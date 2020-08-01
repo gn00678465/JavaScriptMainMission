@@ -18,7 +18,12 @@ import 'normalize.css';
 // fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCog, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCog,
+  faEdit,
+  faTrashAlt,
+  faCloudUploadAlt,
+} from '@fortawesome/free-solid-svg-icons';
 // vue
 import App from './App.vue';
 import router from './router';
@@ -45,7 +50,12 @@ Vue.use(VueAxios, axios);
 Vue.component('Loading', Loading);
 // fontawesome
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-library.add(faCog, faEdit, faTrashAlt);
+library.add(
+  faCog,
+  faEdit,
+  faTrashAlt,
+  faCloudUploadAlt,
+);
 
 Vue.config.productionTip = false;
 

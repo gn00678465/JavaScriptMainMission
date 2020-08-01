@@ -5,44 +5,61 @@
         <!-- header -->
         <h4 class="modal__header">
           <slot name="header">
-            default header
+            {{ modalTitle }}
           </slot>
+          <span class="times" @click.prevent="closeModal">&times;</span>
         </h4>
         <!-- body -->
         <div class="modal__body">
           <div class="container">
             <div class="row">
               <div class="col-4">
+                <div class="form-file">
+                  <label for="upFile">上傳圖片
+                    <font-awesome-icon :icon="['fas', 'cloud-upload-alt']" />
+                  </label>
+                  <input type="file" name="file" id="upFile" accept="image/png, image/jpeg"
+                  @input="fileHandler($event)">
+                </div>
               </div>
               <div class="col-8">
                 <div class="container">
                   <div class="row">
-                    <div class="col-12">
-                      <InputField/>
+                    <div class="col-10">
+                      <InputField :label="'標題'" :placeholder="'請輸入標題'" :rules="'required'"
+                      v-model="inputTemp.title"/>
+                    </div>
+                    <div class="col-2">
+                      <span class="label">是否啟用</span>
+                      <ToggleSwitch :prodId="'isEnable'"
+                      v-model="inputTemp.enabled"/>
                     </div>
                     <div class="col-6">
-                      <InputField/>
+                      <InputField :label="'分類'" :placeholder="'請輸入分類'" :rules="'required'"
+                      v-model="inputTemp.category"/>
                     </div>
                     <div class="col-6">
-                      <InputField/>
+                      <InputField :label="'單位'" :placeholder="'請輸入單位'" :rules="'required'"
+                      v-model="inputTemp.unit"/>
                     </div>
                     <div class="col-6">
-                      <InputField/>
+                      <InputField :label="'原價'" :placeholder="'請輸入原價'" :type="'number'"
+                      :rules="'required'"
+                      v-model.number="inputTemp.origin_price"/>
                     </div>
                     <div class="col-6">
-                      <InputField/>
+                      <InputField :label="'售價'" :placeholder="'請輸入售價'" :type="'number'"
+                      :rules="'required'"
+                      v-model.number="inputTemp.price"/>
                     </div>
                     <hr>
                     <div class="col-12">
-                      <InputField/>
+                      <InputField :type="'textarea'" :label="'產品描述'" :placeholder="'請輸入產品描述'"
+                      :rules="'required'" v-model="inputTemp.content"/>
                     </div>
                     <div class="col-12">
-                      產品描述：
-                      <vue-editor v-model="inputTemp.content" />
-                    </div>
-                    <div class="col-6">
-                      是否啟用：
-                      <ToggleSwitch/>
+                      <span class="label">商品說明：</span>
+                      <vue-editor v-model="inputTemp.description" />
                     </div>
                   </div>
                 </div>
@@ -51,7 +68,9 @@
           </div>
         </div>
         <!-- footer -->
-        <div class="modal__footer"></div>
+        <div class="modal__footer">
+          <BtnGroup :btns="btns" @emitHandler="actionHandler"/>
+        </div>
       </div>
     </div>
   </transition>
@@ -60,20 +79,56 @@
 <script>
 import { VueEditor } from 'vue2-editor';
 import ToggleSwitch from './ToggleSwitch.vue';
+import BtnGroup from './BtnGroup.vue';
 import InputField from './InputField.vue';
 
 export default {
   name: 'Modal',
-  components: { InputField, VueEditor, ToggleSwitch },
+  components: {
+    InputField,
+    VueEditor,
+    ToggleSwitch,
+    BtnGroup,
+  },
   data() {
     return {
       showModal: false,
+      modalTitle: '',
       inputTemp: {},
+      btns: [
+        {
+          class: 'primary',
+          outline: true,
+          content: '確定',
+          icon: '',
+          action: 'check',
+          size: 'xl',
+        },
+        {
+          class: 'error',
+          outline: true,
+          content: '取消',
+          icon: '',
+          action: 'cancle',
+          size: 'xl',
+        },
+      ],
     };
   },
   methods: {
     closeModal() {
       this.showModal = false;
+      this.inputTemp = {};
+    },
+    fileHandler(e) {
+      const { size } = e.target.files[0];
+      console.log(size);
+    },
+    actionHandler(action) {
+      this[`${action}Handler`]();
+    },
+    cancleHandler() {
+      this.closeModal();
     },
   },
 };
@@ -108,16 +163,63 @@ export default {
     }
     &__header {
       padding: 1rem;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       border-bottom: 1px solid #dee2e6;
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
       justify-content: space-between;
+      .times {
+        font-size: 2rem;
+        font-weight: bold;
+        cursor: pointer;
+      }
     }
     &__body {
       padding: 1rem;
+      .label {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+      }
     }
+    &__footer {
+      padding: 1rem;
+      border-top: 1px solid #dee2e6;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-end;
+    }
+  }
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 15px;
+  margin-right: 15px;
+  border: 0;
+  border-top: 1px solid rgba(0,0,0,.1);
+  width: 100%;
+}
+
+// file
+.form-file {
+  box-sizing: border-box;
+  label {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    padding: 0.75rem 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    color: #495057;
+    cursor: pointer;
+  }
+  input[type="file"] {
+    display: none;
   }
 }
 
@@ -135,6 +237,7 @@ export default {
   }
 }
 
+// animate
 .modal-enter {
   opacity: 0;
 }
