@@ -1,16 +1,54 @@
 <template>
   <transition name="modal" v-if="showModal">
-    <div class="modal" @click.prevent="closeModal">
-      <div class="modal__container">
+    <div class="modal">
+      <div class="modal__container modal__wrapper-xl">
         <!-- header -->
-        <div class="modal__header">
+        <h4 class="modal__header">
           <slot name="header">
             default header
           </slot>
-        </div>
+        </h4>
         <!-- body -->
         <div class="modal__body">
-
+          <div class="container">
+            <div class="row">
+              <div class="col-4">
+              </div>
+              <div class="col-8">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <InputField/>
+                    </div>
+                    <div class="col-6">
+                      <InputField/>
+                    </div>
+                    <div class="col-6">
+                      <InputField/>
+                    </div>
+                    <div class="col-6">
+                      <InputField/>
+                    </div>
+                    <div class="col-6">
+                      <InputField/>
+                    </div>
+                    <hr>
+                    <div class="col-12">
+                      <InputField/>
+                    </div>
+                    <div class="col-12">
+                      產品描述：
+                      <vue-editor v-model="inputTemp.content" />
+                    </div>
+                    <div class="col-6">
+                      是否啟用：
+                      <ToggleSwitch/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- footer -->
         <div class="modal__footer"></div>
@@ -20,11 +58,17 @@
 </template>
 
 <script>
+import { VueEditor } from 'vue2-editor';
+import ToggleSwitch from './ToggleSwitch.vue';
+import InputField from './InputField.vue';
+
 export default {
   name: 'Modal',
+  components: { InputField, VueEditor, ToggleSwitch },
   data() {
     return {
       showModal: false,
+      inputTemp: {},
     };
   },
   methods: {
@@ -36,6 +80,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import './../assets/_sass/sass.scss';
+
+.box {
+  background: #000;
+  color: #fff;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -49,12 +100,38 @@ export default {
   justify-content: center;
   .modal {
     &__container {
-      padding: 20px 30px;
+      width: 100%;
       background-color: #fff;
-      border-radius: 2px;
+      border-radius: 5px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
       transition: all 0.8s ease;
     }
+    &__header {
+      padding: 1rem;
+      font-size: 1.5rem;
+      border-bottom: 1px solid #dee2e6;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    &__body {
+      padding: 1rem;
+    }
+  }
+}
+
+// size
+.modal__wrapper {
+  max-width: 500px;
+  &-sm {
+    max-width: 300px;
+  }
+  &-lg {
+    max-width: 800px;
+  }
+  &-xl {
+    max-width: 1140px;
   }
 }
 
