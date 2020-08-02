@@ -5,7 +5,7 @@
         <!-- header -->
         <h4 class="modal__header">
           <slot name="header">
-            {{ modalTitle }}
+            {{ title }}
           </slot>
           <span class="times" @click.prevent="closeModal">&times;</span>
         </h4>
@@ -14,12 +14,29 @@
           <div class="container">
             <div class="row">
               <div class="col-4">
-                <div class="form-file">
-                  <label for="upFile">上傳圖片
-                    <font-awesome-icon :icon="['fas', 'cloud-upload-alt']" />
-                  </label>
-                  <input type="file" name="file" id="upFile" accept="image/png, image/jpeg"
-                  @input="fileHandler($event)">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <!-- loading -->
+                      <div class="vld-parent">
+                        <loading :active.sync="isUplading"
+                        :can-cancel="true"
+                        :loader="'bars'"
+                        :color="'#3D87F5'"
+                        :is-full-page="false"></loading>
+                        <InputUpload ref="file" @submit="uploadFile"/>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="col-12">
+                      <InputField :label="'圖片網址 - 1'"
+                      v-model="inputTemp.imageUrl[0]"/>
+                    </div>
+                    <div class="col-12" v-for="i in (inputTemp.imageUrl.length)" :key="i">
+                      <InputField :label="`圖片網址 - ${i + 1}`"
+                      v-model="inputTemp.imageUrl[i]"/>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-8">
@@ -31,7 +48,7 @@
                     </div>
                     <div class="col-2">
                       <span class="label">是否啟用</span>
-                      <ToggleSwitch :prodId="'isEnable'"
+                      <ToggleSwitch :prodId="'isEnable'" :checked="inputTemp.enabled"
                       v-model="inputTemp.enabled"/>
                     </div>
                     <div class="col-6">
@@ -78,30 +95,36 @@
 
 <script>
 import { VueEditor } from 'vue2-editor';
+import notify from '@/assets/Notify';
 import ToggleSwitch from './ToggleSwitch.vue';
 import BtnGroup from './BtnGroup.vue';
 import InputField from './InputField.vue';
+import InputUpload from './InputUpload.vue';
 
 export default {
   name: 'Modal',
+  mixins: [notify],
   components: {
     InputField,
     VueEditor,
     ToggleSwitch,
     BtnGroup,
+    InputUpload,
   },
   data() {
     return {
       showModal: false,
       modalTitle: '',
-      inputTemp: {},
+      inputTemp: {
+        imageUrl: [],
+      },
       btns: [
         {
           class: 'primary',
           outline: true,
           content: '確定',
           icon: '',
-          action: 'check',
+          action: 'checked',
           size: 'xl',
         },
         {
@@ -113,22 +136,37 @@ export default {
           size: 'xl',
         },
       ],
+      isUplading: false,
     };
   },
   methods: {
     closeModal() {
       this.showModal = false;
       this.inputTemp = {};
-    },
-    fileHandler(e) {
-      const { size } = e.target.files[0];
-      console.log(size);
+      this.$set(this.inputTemp, 'imageUrl', []);
     },
     actionHandler(action) {
       this[`${action}Handler`]();
     },
     cancleHandler() {
       this.closeModal();
+    },
+    checkedHandler() {
+      this.$emit('update', this.modalTitle, this.inputTemp);
+      this.closeModal();
+    },
+    uploadFile(data) {
+      if (this.inputTemp.imageUrl.length < 4) {
+        this.isUplading = true;
+        this.UploadFile(data);
+      } else {
+        this.errorNotify('上傳數量到達限制!');
+      }
+    },
+  },
+  computed: {
+    title() {
+      return this.modalTitle === 'create' ? '新增產品' : '編輯產品';
     },
   },
 };

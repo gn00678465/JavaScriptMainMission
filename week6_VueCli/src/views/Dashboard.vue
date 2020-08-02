@@ -9,11 +9,12 @@
 <script>
 import backend from '@/assets/Backend_mixin';
 import navbar from '@/components/Navbar.vue';
+import notify from '@/assets/Notify';
 
 export default {
   name: 'Dashboard',
   components: { navbar },
-  mixins: [backend],
+  mixins: [backend, notify],
   data() {
     return {
       token: '',

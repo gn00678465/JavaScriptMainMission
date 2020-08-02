@@ -18,6 +18,10 @@
 export default {
   name: 'BtnGroup',
   props: {
+    splite: {
+      type: Boolean,
+      default: false,
+    },
     btns: {
       type: Array,
     },

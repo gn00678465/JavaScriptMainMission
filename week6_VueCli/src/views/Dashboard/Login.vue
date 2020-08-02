@@ -19,12 +19,13 @@
 
 <script>
 import LoginForm from '@/components/LoginForm.vue';
-import mixin from '@/assets/Backend_mixin';
+import backend from '@/assets/Backend_mixin';
+import notify from '@/assets/Notify';
 
 export default {
   name: 'Login',
   components: { LoginForm },
-  mixins: [mixin],
+  mixins: [backend, notify],
   data() {
     return {
       err: {},

@@ -18,15 +18,14 @@
           </tr>
         </thead>
         <tbody>
-          <DashboardProductsItem
-          v-for="item in newProducts" :key="item.id"
+          <tr is="DashboardProductsItem" v-for="item in newProducts" :key="item.id"
           :prodItem="item"
-          @click="emitHandler"/>
+          @click="emitHandler"></tr>
       </tbody>
       </table>
     </div>
     <Pagination :total_pages="total_page" :page.sync="page" />
-    <Modal ref="modal"/>
+    <Modal ref="modal" @update="prodHandler"/>
   </div>
 </template>
 
@@ -35,6 +34,7 @@ import DashboardProductsItem from '@/components/DashboardProductsItem.vue';
 import Pagination from '@/components/Pagination.vue';
 import BtnGroup from '@/components/BtnGroup.vue';
 import backend from '@/assets/Backend_mixin';
+import notify from '@/assets/Notify';
 
 export default {
   name: 'Products',
@@ -44,7 +44,7 @@ export default {
     BtnGroup,
     Modal: () => import('@/components/Modal.vue'),
   },
-  mixins: [backend],
+  mixins: [backend, notify],
   created() {
     this.getProductList();
   },
@@ -81,17 +81,28 @@ export default {
     },
     editHandler(item) {
       this.$refs.modal.showModal = true;
-      this.$refs.modal.modalTitle = '編輯產品';
-      console.log(item);
+      this.$refs.modal.modalTitle = 'edit';
+      const NewItem = { ...item };
+      this.$refs.modal.inputTemp = NewItem;
     },
     delHandler(item) {
       this.destroyProduct(item.id);
     },
     createHandler() {
       this.$refs.modal.showModal = true;
-      this.$refs.modal.modalTitle = '新增產品';
+      this.$refs.modal.modalTitle = 'create';
     },
-    createProd() {
+    prodHandler(...data) {
+      const [action, item] = [...data];
+      this[`${action}Prod`](item);
+    },
+    createProd(item) {
+      this.isLoading = true;
+      this.CreateProd(item);
+    },
+    editProd(item) {
+      this.isLoading = true;
+      this.UpdateProd(item);
     },
   },
   computed: {

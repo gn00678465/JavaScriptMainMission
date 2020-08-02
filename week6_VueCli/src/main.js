@@ -24,6 +24,9 @@ import {
   faTrashAlt,
   faCloudUploadAlt,
 } from '@fortawesome/free-solid-svg-icons';
+// vue-toastification
+import Toast from 'vue-toastification';
+import 'vue-toastification/dist/index.css';
 // vue
 import App from './App.vue';
 import router from './router';
@@ -56,6 +59,25 @@ library.add(
   faTrashAlt,
   faCloudUploadAlt,
 );
+// vue-toastification
+const options = {
+  transition: 'Vue-Toastification__bounce',
+  maxToasts: 20,
+  newestOnTop: true,
+  position: 'top-right',
+  timeout: 3000,
+  closeOnClick: false,
+  pauseOnFocusLoss: false,
+  pauseOnHover: false,
+  draggable: true,
+  draggablePercent: 0.6,
+  showCloseButtonOnHover: false,
+  hideProgressBar: true,
+  closeButton: false,
+  icon: true,
+  rtl: false,
+};
+Vue.use(Toast, options);
 
 Vue.config.productionTip = false;
 
