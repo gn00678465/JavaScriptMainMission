@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar :brand="brand" :routers="getRouterPath" :showIcons="false"/>
+    <navbar :brand="brand" :routers="getRouterPath" :showIcons="false" @LogoutBtn="logout"/>
     <h2>Dashboard</h2>
     <router-view></router-view>
   </div>
@@ -31,6 +31,9 @@ export default {
     }
   },
   methods: {
+    logout() {
+      this.SignOut(this.token);
+    },
   },
   computed: {
     getRouterPath() {

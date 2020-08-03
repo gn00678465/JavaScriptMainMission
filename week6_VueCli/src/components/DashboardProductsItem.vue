@@ -2,8 +2,8 @@
   <tr>
     <td>{{prodItem.category}}</td>
     <td>{{prodItem.title}}</td>
-    <td>{{prodItem.origin_price}}</td>
-    <td>{{prodItem.price}}</td>
+    <td>{{prodItem.origin_price | Currency | Dollar}}</td>
+    <td>{{prodItem.price | Currency | Dollar}}</td>
     <td>
       <toggler :prodId="prodItem.id.substr(0, 5)" :disabled="true" :checked="prodItem.enabled"/>
       </td>

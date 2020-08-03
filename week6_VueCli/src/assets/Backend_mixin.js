@@ -22,6 +22,22 @@ export default {
           this.isLoading = false;
         });
     },
+    // 後台登出
+    SignOut(token) {
+      this.isLoading = true;
+      this.$http.post(`${process.env.VUE_APP_PATH}api/auth/logout`, { api_token: token })
+        .then((res) => {
+          if (res.status === 200) {
+            this.successNotify(res.data.message);
+            this.$router.replace('/login');
+            this.isLoading = false;
+          }
+        })
+        .catch((err) => {
+          this.errorNotify(err.response.data.message);
+          this.isLoading = false;
+        });
+    },
     // token 寫入 cookie
     redirection(data) {
       const { token, expired } = data;

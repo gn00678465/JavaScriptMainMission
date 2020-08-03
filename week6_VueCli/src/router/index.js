@@ -8,14 +8,19 @@ const routes = [
     path: '/',
     name: 'Home',
     component: () => import('../views/Home.vue'),
+    meta: { title: 'Home' },
     children: [
       {
         path: 'products',
         component: () => import('../views/Home/Products.vue'),
       },
       {
-        path: 'product',
+        path: 'product/:id',
         component: () => import('../views/Home/Product.vue'),
+      },
+      {
+        path: 'about',
+        component: () => import('../views/Home/About.vue'),
       },
       {
         path: 'carts',

@@ -172,13 +172,18 @@ $thead: #c9dff0;
 ::v-deep tr {
     color: #555;
     height: 100%;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    &:nth-child(odd) {
+      background: #eee;
+    }
     td {
       text-align: center;
       height: auto;
       line-height: 1;
       vertical-align: middle;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding-top: 7px;
+      padding-bottom: 7px;
     }
   }
   }

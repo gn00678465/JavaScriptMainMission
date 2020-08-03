@@ -23,10 +23,15 @@ import {
   faEdit,
   faTrashAlt,
   faCloudUploadAlt,
+  faShoppingCart,
+  faUser,
+  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 // vue-toastification
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
+// filter
+import './assets/_filter';
 // vue
 import App from './App.vue';
 import router from './router';
@@ -58,6 +63,9 @@ library.add(
   faEdit,
   faTrashAlt,
   faCloudUploadAlt,
+  faShoppingCart,
+  faUser,
+  faSignOutAlt,
 );
 // vue-toastification
 const options = {
